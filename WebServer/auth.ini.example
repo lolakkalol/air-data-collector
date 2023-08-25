@@ -1,0 +1,9 @@
+[auth_hash]
+hash = "MyHashedInsertDataPassword"
+
+[sql_auth]
+servername    = "my.domain.com"
+username      = "MyUsername"
+password      = "MyPassword"
+database_name = "MyDatabaseName"
+port          = port_number
