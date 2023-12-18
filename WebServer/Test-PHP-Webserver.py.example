@@ -1,0 +1,41 @@
+"""
+This files sends a POST request to the webserver that shall insert the data into
+MySql server. This file is only used for testing purposes to see if the 
+webserver inserts the data in the POST request.
+"""
+
+import requests
+import base64
+
+message = "usermame:MyPlainPassword"
+message_bytes = message.encode('ascii')
+base64_bytes = base64.b64encode(message_bytes)
+base64_message = base64_bytes.decode('ascii')
+
+url = 'https://my.domain.com/insert_data.php'
+
+x = requests.post(url, headers={
+    'user-agent': '',
+    'Authorization': 'Basic ' + base64_message,
+    },
+    data={
+        'Location': 'home_desktop',
+        'MHZ19B-Temperature': 4321,
+        'MHZ19B-CO2' : 424,
+        'PM10_STD'  : 1,
+        'PM25_STD'  : 2,
+        'PM100_STD' : 3,
+        'PM10_ATM'  : 4,
+        'PM25_ATM'  : 5,
+        'PM100_ATM' : 6,
+        'PART_03'   : 7,
+        'PART_05'   : 8,
+        'PART_10'   : 9,
+        'PART_25'   : 10,
+        'PART_50'   : 11,
+        'PART_100'  : 12,
+    }
+)
+
+print(x.status_code)
+print(x.content)
