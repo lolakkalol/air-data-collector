@@ -1,4 +1,5 @@
-<!--
+<?php
+/*
     This file is the one that is responsible for accepting POST requests 
     containing sensor data and inserting them into the correct tables in the 
     MySql server. This file first makes sure that the client is using SSL and 
@@ -6,9 +7,11 @@
     for this non sensetive/critical application. It then connects to the MySql 
     server, deconstructs the data in the post request and inserts it into the 
     MySql database. All SQL statements were user input is used are escaped.
--->
 
-<?php
+    TODO:
+    - Refactor code to use functions instead of using a bunch of copy pase code.
+*/
+
     // Require HTTPS connection
     if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
         header("HTTP/1.0 404 Not Found");
@@ -68,6 +71,10 @@
         die("Location specified not found!");
     }
 
+    /***********************/
+    /*         MHZ19B      */
+    /***********************/
+
     // Check if temperature was provided
     if(isset($_POST['MHZ19B-Temperature'])) {
         // Insert temperature into database
@@ -75,7 +82,7 @@
         $sql = "INSERT INTO Temperature (Location, Celsius, Sensor) VALUES ('$Location', $Temperature, 'MHZ19B')";
         $result = $connection->query($sql);
         if ($result) {
-            echo "Insertet Temperature data\n\r";
+            echo "Inserted MHZ19B Temperature data\n\r";
         }
     }
 
@@ -86,9 +93,76 @@
         $sql = "INSERT INTO CO2 (Location, PPM, Sensor) VALUES ('$Location', $CO2, 'MHZ19B')";
         $result = $connection->query($sql);
         if ($result) {
-            echo "Insertet CO2 data\n\r";
+            echo "Inserted MHZ19B CO2 data\n\r";
         }
     }
+
+    /***********************/
+    /*         ENS160      */
+    /***********************/
+
+    // Check if CO2 was provided from ENS160
+    if(isset($_POST['ENS160-CO2'])) {
+        // Insert temperature into database
+        $CO2 = mysqli_real_escape_string($connection, $_POST['ENS160-CO2']);
+        $sql = "INSERT INTO CO2 (Location, PPM, Sensor) VALUES ('$Location', $CO2, 'ENS160')";
+        $result = $connection->query($sql);
+        if ($result) {
+            echo "Inserted ENS160 CO2 data\n\r";
+        }
+    }
+
+    // Check if AQI was provided from ENS160
+    if(isset($_POST['ENS160-AQI'])) {
+        // Insert temperature into database
+        $AQI = mysqli_real_escape_string($connection, $_POST['ENS160-AQI']);
+        $sql = "INSERT INTO AQI (Location, Level, Sensor) VALUES ('$Location', $AQI, 'ENS160')";
+        $result = $connection->query($sql);
+        if ($result) {
+            echo "Inserted ENS160 AQI data\n\r";
+        }
+    }
+
+    // Check if TVOC was provided from ENS160
+    if(isset($_POST['ENS160-TVOC'])) {
+        // Insert temperature into database
+        $TVOC = mysqli_real_escape_string($connection, $_POST['ENS160-TVOC']);
+        $sql = "INSERT INTO TVOC (Location, Level, Sensor) VALUES ('$Location', $TVOC, 'ENS160')";
+        $result = $connection->query($sql);
+        if ($result) {
+            echo "Inserted ENS160 TVOC data\n\r";
+        }
+    }
+
+    /***********************/
+    /*         AHT2x       */
+    /***********************/
+
+    // Check if Temperature was provided from AHT2x
+    if(isset($_POST['AHT2x-Temperature'])) {
+        // Insert temperature into database
+        $Temperature = mysqli_real_escape_string($connection, $_POST['AHT2x-Temperature']);
+        $sql = "INSERT INTO Temperature (Location, Celsius, Sensor) VALUES ('$Location', $Temperature, 'AHT2x')";
+        $result = $connection->query($sql);
+        if ($result) {
+            echo "Inserted AHT2x Temperature data\n\r";
+        }
+    }
+
+    // Check if Humidity was provided from AHT2x
+    if(isset($_POST['AHT2x-Humidity'])) {
+        // Insert humidity into database
+        $Humidity = mysqli_real_escape_string($connection, $_POST['AHT2x-Humidity']);
+        $sql = "INSERT INTO Humidity (Location, Percent, Sensor) VALUES ('$Location', $Humidity, 'AHT2x')";
+        $result = $connection->query($sql);
+        if ($result) {
+            echo "Inserted AHT2x Humidity data\n\r";
+        }
+    }
+
+    /***********************/
+    /*       PMS5003T      */
+    /***********************/
 
     if (isset($_POST['PM10_STD']) || isset($_POST['PM25_STD']) || isset($_POST['PM100_STD']) || 
         isset($_POST['PM10_ATM']) || isset($_POST['PM25_ATM']) || isset($_POST['PM100_ATM']) ||
@@ -125,7 +199,7 @@
         $sql = "INSERT INTO Particles (Location, PM10_STD, PM25_STD, PM100_STD, PM10_ATM, PM25_ATM, PM100_ATM, PART_03, PART_05, PART_10, PART_25, PART_50, PART_100, Sensor) VALUES ('$Location', $PM10_STD, $PM25_STD, $PM100_STD, $PM10_ATM, $PM25_ATM, $PM100_ATM, $PART_03, $PART_05, $PART_10, $PART_25, $PART_50, $PART_100, 'PMS5003T')";
         $result = $connection->query($sql);
         if ($result) {
-            echo "Insertet Particle data\n\r";
+            echo "Inserted Particle data\n\r";
         }
     }
     

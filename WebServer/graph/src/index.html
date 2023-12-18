@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Chart.js example</title>
+  </head>
+  <body>
+    <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
+    <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
+    
+    <div>
+        From:
+        <input type="datetime-local">
+    </div>
+    <div>
+        To:
+        <input type="datetime-local">
+    </div>
+
+    <button>Update</button>
+
+    <select name="metric">
+        <option value="CO2">CO2</option>
+        <option value="Temperature">Temperature</option>
+        <option value="AQI">AQI</option>
+        <option value="TVOC">TVOC</option>
+    </select>
+
+    <!-- <script type="module" src="dimensions.js"></script> -->
+    <script type="module" src="acquisitions.js"></script>
+  </body>
+</html>

@@ -50,6 +50,35 @@ CREATE TABLE `Particles` (
     FOREIGN KEY (`Sensor`) REFERENCES Sensor(`Name`)
 );
 
+CREATE TABLE `AQI` (
+	`Location` VARCHAR(30) NOT NULL,
+	`Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`Level` FLOAT NOT NULL,
+	`Sensor` VARCHAR(30),
+    FOREIGN KEY (`Location`) REFERENCES Location(`Name`),
+    FOREIGN KEY (`Sensor`) REFERENCES Sensor(`Name`)
+);
+
+CREATE TABLE `TVOC` (
+	`Location` VARCHAR(30) NOT NULL,
+	`Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`Level` FLOAT NOT NULL,
+	`Sensor` VARCHAR(30),
+    FOREIGN KEY (`Location`) REFERENCES Location(`Name`),
+    FOREIGN KEY (`Sensor`) REFERENCES Sensor(`Name`)
+);
+
+CREATE TABLE `Humidity` (
+	`Location` VARCHAR(30) NOT NULL,
+	`Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`Percent` FLOAT NOT NULL,
+	`Sensor` VARCHAR(30),
+    FOREIGN KEY (`Location`) REFERENCES Location(`Name`),
+    FOREIGN KEY (`Sensor`) REFERENCES Sensor(`Name`)
+);
+
 INSERT INTO Location (Name) VALUES ('home_desktop');
 INSERT INTO Sensor (Name) VALUES ('MHZ19B');
 INSERT INTO Sensor (Name) VALUES ('PMS5003T');
+INSERT INTO Sensor (Name) VALUES ('AHT2x');
+INSERT INTO Sensor (Name) VALUES ('ENS160');
